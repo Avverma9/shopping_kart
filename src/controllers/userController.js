@@ -42,33 +42,7 @@ const createUser = async function (req, res) {
     const saltRounds = 10;
     const hash = bcrypt.hashSync(password, saltRounds)
     
-    address = JSON.parse(address)
-    let { shipping, billing } = address
-
-    if (!shipping) { return res.status(400).send({ status: false, message: "Shipping Address is mandatory" }); }
-    if (!billing) { return res.status(400).send({ status: false, message: "Billing Address is required" }); }
-
-    if (shipping) {
-      if (!shipping.street) { return res.status(400).send({ status: false, message: "Shipping Street is mandatory" }); }
-      if (!validValue(shipping.street)) { return res.status(400).send({ status: false, Message: "Please provide street name in string format" }); }
-
-      if (!shipping.city) { return res.status(400).send({ status: false, message: "Shipping City is mandatory" }); }
-      if (!validValue(shipping.city)) { return res.status(400).send({ status: false, Message: "Please provide city name in string format" }); }
-
-      if (!shipping.pincode) { return res.status(400).send({ status: false, message: "Shipping Pincode is mandatory" }); }
-      if (!validPincode(shipping.pincode)) { return res.status(400).send({ status: false, Message: "Please provide pincode in number format" }); }
-    }
-
-    if (billing) {
-      if (!billing.street) { return res.status(400).send({ status: false, message: "Billing Street is mandatory" }); }
-      if (!validValue(billing.street)) { return res.status(400).send({ status: false, Message: "Please provide street name in string format" }); }
-      
-      if (!billing.city) { return res.status(400).send({ status: false, message: "Billing City is mandatory" }); }
-      if (!validValue(billing.city)) { return res.status(400).send({ status: false, Message: "Please provide city name in string format" }); }
-      
-      if (!billing.pincode) { return res.status(400).send({ status: false, message: "Billing Pincode is mandatory" }); }
-      if (!validPincode(billing.pincode)) { return res.status(400).send({ status: false, Message: "Please provide pincode in number format" }); }
-    }
+    
 
     if (file && file.length > 0) {
       if (!isValidImg(file[0].originalname)) { return res.status(400).send({ status: false, message:"Please provide image in jpg|gif|png|jpeg|jfif " }); } 
